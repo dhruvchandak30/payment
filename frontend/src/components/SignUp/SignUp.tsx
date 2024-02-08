@@ -71,7 +71,7 @@ const SignUp = () => {
     firstName: string,
     lastName: string
   ) => {
-    const apiUrl = "http://localhost:3000/api/v1/user/signup";
+    const apiUrl = "https://payment-backend-omyg.onrender.com/api/v1/user/signup";
 
     const postData = {
       username: email,

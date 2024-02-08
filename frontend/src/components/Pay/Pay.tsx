@@ -21,7 +21,7 @@ const Pay: React.FC = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        "http://localhost:3000/api/v1/user/getUsers"
+        "https://payment-backend-omyg.onrender.com/api/v1/user/getUsers"
       );
       if (response.ok) {
         const data = (await response.json()) as { userData: UserInterface[] };
@@ -46,7 +46,8 @@ const Pay: React.FC = () => {
       setWarning("You don't have enough Amount");
       return;
     }
-    const apiUrl = "http://localhost:3000/api/v1/account/transfer";
+    const apiUrl =
+      "https://payment-backend-omyg.onrender.com/api/v1/account/transfer";
     const data = {
       amount: amount,
       to: selectedUser?._id,
@@ -81,7 +82,8 @@ const Pay: React.FC = () => {
   };
 
   const getBalance = async () => {
-    const apiUrl = "http://localhost:3000/api/v1/account/getBalance";
+    const apiUrl =
+      "https://payment-backend-omyg.onrender.com/api/v1/account/getBalance";
     const data = {
       userId: localStorage.getItem("id"),
     };

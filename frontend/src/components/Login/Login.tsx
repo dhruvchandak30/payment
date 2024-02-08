@@ -50,7 +50,7 @@ const Login = () => {
     loginHandler(email, password);
   };
   const loginHandler = (email: string, password: string) => {
-    const apiUrl = "http://localhost:3000/api/v1/user/signin";
+    const apiUrl = "https://payment-backend-omyg.onrender.com/api/v1/user/signin";
 
     const postData = {
       username: email,

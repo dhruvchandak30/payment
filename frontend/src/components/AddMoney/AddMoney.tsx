@@ -9,7 +9,8 @@ const AddMoney = () => {
   const [balance, setBalance] = useState(0);
 
   const getBalance = async () => {
-    const apiUrl = "http://localhost:3000/api/v1/account/getBalance";
+    const apiUrl =
+      "https://payment-backend-omyg.onrender.com/api/v1/account/getBalance";
     const data = {
       userId: localStorage.getItem("id"),
     };
@@ -60,7 +61,7 @@ const AddMoney = () => {
       setLoading(false);
       return;
     }
-    const apiUrl = "http://localhost:3000/api/v1/account/addMoney";
+    const apiUrl = "https://payment-backend-omyg.onrender.com/api/v1/account/addMoney";
     const data = {
       amount: amount,
       to: localStorage.getItem("id"),
