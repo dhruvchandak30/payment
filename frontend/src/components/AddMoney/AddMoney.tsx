@@ -45,8 +45,10 @@ const AddMoney = () => {
   const AddMoneyHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    console.log(e.target.elements);
-    setAmount(Number(e.target.elements.AddMoney.value));
+    const form = e.target as HTMLFormElement;
+    const amountInput = form.elements.namedItem("AddMoney") as HTMLInputElement;
+    const amountVal = Number(amountInput.value);
+    setAmount(amountVal);
     console.log("Amount:", amount);
     if (Number(amount) < 0) {
       setWarning("Please enter valid Amount");
@@ -86,6 +88,7 @@ const AddMoney = () => {
         getBalance();
       })
       .catch((error) => {
+        console.log(error);
         setWarning("Error in Making payment");
         setLoading(false);
       });

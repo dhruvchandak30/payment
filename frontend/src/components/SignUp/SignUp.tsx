@@ -30,22 +30,32 @@ const SignUp = () => {
   });
   const navigate = useNavigate();
   const [warning, setWarning] = useState("");
-  const handleInputChange = (e) => {
+
+  interface FormInputEvent {
+    target: {
+      name: string;
+      value: string;
+    };
+  }
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement> & FormInputEvent
+  ) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
   const handleShowClick = () => setShowPassword(!showPassword);
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Perform form data validation here (email validation example)
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
       console.error("Invalid email address");
       return;
     }
-    // Log form data to the console
+
     console.log("Form Data:", formData);
     SignUpHandler(
       formData.email,
@@ -53,9 +63,8 @@ const SignUp = () => {
       formData.firstName,
       formData.lastName
     );
-
-    // Add your form submission logic here (e.g., API call)
   };
+
   const SignUpHandler = (
     email: string,
     password: string,
