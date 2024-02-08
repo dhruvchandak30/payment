@@ -6,7 +6,7 @@ const { User } = require("../models/UserSchema");
 const { Account } = require("../models/AccountSchema");
 const mongoose = require("mongoose");
 
-router.get("/getBalance", async (req, res) => {
+router.post("/getBalance", async (req, res) => {
   try {
     const client = await dbConnect();
     const database = client.db("paytm");
@@ -14,10 +14,11 @@ router.get("/getBalance", async (req, res) => {
     const existingUser = await collection.findOne({
       userId: req.body.userId,
     });
-    console.log("Account Details of user is", existingUser.balance);
+  
     if (existingUser) {
       res.status(200).json({
         message: `Available Balance is ${existingUser.balance}`,
+        balance:existingUser.balance
       });
     } else {
       res.status(404).json({

@@ -7,3 +7,20 @@
 html {
   background-color: #e3e2df;
 }
+.IsLoader {
+  /* background-color: red; */
+  border: 2px solid rgb(241, 133, 207);
+  border-top: 2px solid rgb(250, 6, 185);
+  border-radius:50%;
+  width: 2rem;
+  height: 2rem;
+  animation: rotate  1s infinite;
+}
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

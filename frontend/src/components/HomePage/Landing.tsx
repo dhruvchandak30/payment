@@ -1,6 +1,8 @@
 import LandingImage from "../../assets/landing.jpg";
-
+import { Link } from "react-router-dom";
 const Landing = () => {
+  const isLoggedIn = localStorage.getItem("login");
+
   return (
     <div className="flex lg:flex-row flex-col justify-around items-center">
       <div className="flex flex-col lg:items-start items-center ">
@@ -19,9 +21,11 @@ const Landing = () => {
         <p className="flex lg:text-4xl text-xl w-2/3 ">
           funds, and do a lot more.
         </p>
-        <div className="bg-[#9A1750] lg:text-xl  text-sm my-8 text-white w-max p-2 rounded-xl">
-          Start Paying Now
-        </div>
+        <Link to={isLoggedIn ? "/pay" : "/login"}>
+          <div className="bg-[#9A1750] lg:text-xl  text-sm my-8 text-white w-max p-2 rounded-xl">
+            Start Paying Now
+          </div>
+        </Link>
       </div>
       <div>
         <img
