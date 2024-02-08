@@ -14,11 +14,11 @@ router.post("/getBalance", async (req, res) => {
     const existingUser = await collection.findOne({
       userId: req.body.userId,
     });
-  
+
     if (existingUser) {
       res.status(200).json({
         message: `Available Balance is ${existingUser.balance}`,
-        balance:existingUser.balance
+        balance: existingUser.balance,
       });
     } else {
       res.status(404).json({
@@ -60,6 +60,34 @@ router.post("/transfer", async (req, res) => {
       { userId: from },
       { $inc: { balance: -amount } }
     );
+    await collection.updateOne({ userId: to }, { $inc: { balance: amount } });
+
+    res.json({
+      message: "Transfer successful",
+    });
+  } catch (error) {
+    console.error("Error during transfer:", error);
+    res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
+});
+router.post("/addMoney", async (req, res) => {
+  try {
+    const client = await dbConnect();
+    const database = client.db("paytm");
+    const collection = database.collection("Account");
+
+    const { amount, to } = req.body;
+
+    const toAccount = await collection.findOne({ userId: to });
+
+    if (!toAccount) {
+      return res.status(400).json({
+        message: "Invalid account",
+      });
+    }
+
     await collection.updateOne({ userId: to }, { $inc: { balance: amount } });
 
     res.json({

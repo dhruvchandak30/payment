@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import UserCard from "./UserCard";
 import "../../index.css";
+import Navbar from "../Navbar/Navbar";
 interface UserInterface {
   _id: string;
   username: string;
@@ -111,75 +112,78 @@ const Pay: React.FC = () => {
     getBalance();
   }, []);
   return (
-    <div className="text-black flex  flex-col justify-center items-center">
-      <p className="text-[#932243] text-4xl font-bold">Payment Portal</p>
-      {balance > 0 && (
-        <p className="text-2xl">Available Balance is Rs {balance}</p>
-      )}
-      <button
-        className="text-xl text-black my-4 rounded-md p-2 bg-[#cc407c] border-2 border-black"
-        onClick={getUserHandler}
-      >
-        See Users to pay
-      </button>
-
-      {userData.length > 0 && (
-        <p className="text-2xl mb-3">Select any User to pay them</p>
-      )}
-      {userData.length > 0 &&
-        userData.map((item: UserInterface) => (
-          <div key={item._id} className="w-64">
-            <hr></hr>
-            <UserCard
-              firstName={item.firstName}
-              lastName={item.lastName}
-              id={item._id}
-              onUserClick={() => setSelectedUser(item)}
-            />
-            <hr></hr>
-          </div>
-        ))}
-      {selectedUser && (
-        <form className="flex flex-col my-8">
-          <label className="text-xl">
-            Enter the Amount you want<br></br> to pay to{" "}
-            {selectedUser.firstName}{" "}
-          </label>
-          <input
-            className="w-64 p-2"
-            type="number"
-            placeholder="Rs"
-            value={amount}
-            onChange={setAmountHandler}
-          ></input>
-        </form>
-      )}
-      {selectedUser && amount && amount > 0 && (
-        <div className="flex flex-col justify-center">
-          <div className="text-xl">
-            You want to pay {selectedUser?.firstName} Rs {amount}
-          </div>
-          <button
-            className=" flex justify-center  items-center border-2 my-6 bg-pink-500 p-2 font-bold border-black"
-            onClick={makePaymentHandler}
-          >
-            Proceed to Pay
-          </button>
-        </div>
-      )}
-      {isLoading && <div className="IsLoader"></div>}
-      <div>
-        {warning && (
-          <p
-            className={
-              warning === "Transaction Successfull"
-                ? "text-green-700 text-xl"
-                : "text-red-700 text-xl"
-            }
-          >
-            {warning}
-          </p>
+    <div>
+      <Navbar />
+      <div className="text-black flex  flex-col justify-center items-center">
+        <p className="text-[#932243] text-4xl font-bold">Payment Portal</p>
+        {balance > 0 && (
+          <p className="text-2xl">Available Balance is Rs {balance}</p>
         )}
+        <button
+          className="text-xl text-black my-4 rounded-md p-2 bg-[#cc407c] border-2 border-black"
+          onClick={getUserHandler}
+        >
+          See Users to pay
+        </button>
+
+        {userData.length > 0 && (
+          <p className="text-2xl mb-3">Select any User to pay them</p>
+        )}
+        {userData.length > 0 &&
+          userData.map((item: UserInterface) => (
+            <div key={item._id} className="w-64">
+              <hr></hr>
+              <UserCard
+                firstName={item.firstName}
+                lastName={item.lastName}
+                id={item._id}
+                onUserClick={() => setSelectedUser(item)}
+              />
+              <hr></hr>
+            </div>
+          ))}
+        {selectedUser && (
+          <form className="flex flex-col my-8">
+            <label className="text-xl">
+              Enter the Amount you want<br></br> to pay to{" "}
+              {selectedUser.firstName}{" "}
+            </label>
+            <input
+              className="w-64 p-2"
+              type="number"
+              placeholder="Rs"
+              value={amount}
+              onChange={setAmountHandler}
+            ></input>
+          </form>
+        )}
+        {selectedUser && amount && amount > 0 && (
+          <div className="flex flex-col justify-center">
+            <div className="text-xl">
+              You want to pay {selectedUser?.firstName} Rs {amount}
+            </div>
+            <button
+              className=" flex justify-center  items-center border-2 my-6 bg-pink-500 p-2 font-bold border-black"
+              onClick={makePaymentHandler}
+            >
+              Proceed to Pay
+            </button>
+          </div>
+        )}
+        {isLoading && <div className="IsLoader"></div>}
+        <div>
+          {warning && (
+            <p
+              className={
+                warning === "Transaction Successfull"
+                  ? "text-green-700 text-xl"
+                  : "text-red-700 text-xl"
+              }
+            >
+              {warning}
+            </p>
+          )}
+        </div>
       </div>
     </div>
   );

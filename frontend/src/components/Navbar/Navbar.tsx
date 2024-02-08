@@ -60,6 +60,31 @@ const Navbar = () => {
             <h5 className="text-[#EE4C7C] heading cursor-pointer">About Us</h5>
           </li>
           {isLogin && (
+            <Link to="/add">
+              <li
+                className={`text-center px-6  h-[30px]  ${bg[2] ? "back" : ""}`}
+                onMouseEnter={() => hoverHandler(2)}
+                onMouseLeave={hoverOut}
+             
+              >
+                <h5 className="text-[#EE4C7C] heading cursor-pointer">
+                  Add Money
+                </h5>
+              </li>
+            </Link>
+          )}
+          {isLogin && (
+            <Link to="/pay">
+              <li
+                className={`text-center px-6  h-[30px]  ${bg[2] ? "back" : ""}`}
+                onMouseEnter={() => hoverHandler(2)}
+                onMouseLeave={hoverOut}
+              >
+                <h5 className="text-[#EE4C7C] heading cursor-pointer">Pay</h5>
+              </li>
+            </Link>
+          )}
+          {isLogin && (
             <li
               className={`text-center px-6  h-[30px]  ${bg[2] ? "back" : ""}`}
               onMouseEnter={() => hoverHandler(2)}
