@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "../Navbar/Navbar";
 import "../../index.css";
 
@@ -42,9 +42,10 @@ const AddMoney = () => {
     getBalance();
   }, []);
 
-  const AddMoneyHandler = (e) => {
+  const AddMoneyHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
+    console.log(e.target.elements);
     setAmount(Number(e.target.elements.AddMoney.value));
     console.log("Amount:", amount);
     if (Number(amount) < 0) {
@@ -97,7 +98,10 @@ const AddMoney = () => {
         Add Money to your Wallet
       </div>
       {!balance && (
-        <div onClick={getBalance} className="cursor-pointer flex items-center justify-center  text-xl border-1 border-black">
+        <div
+          onClick={getBalance}
+          className="cursor-pointer flex items-center justify-center  text-xl border-1 border-black"
+        >
           Check your Available Balance
         </div>
       )}

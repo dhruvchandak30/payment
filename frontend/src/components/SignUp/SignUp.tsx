@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Flex,
   Heading,
@@ -28,7 +28,6 @@ const SignUp = () => {
     lastName: "",
     password: "",
   });
-  const [loginSuccess, setLoginSuccess] = useState(false);
   const navigate = useNavigate();
   const [warning, setWarning] = useState("");
   const handleInputChange = (e) => {
@@ -54,7 +53,6 @@ const SignUp = () => {
       formData.firstName,
       formData.lastName
     );
-    setLoginSuccess(true);
 
     // Add your form submission logic here (e.g., API call)
   };

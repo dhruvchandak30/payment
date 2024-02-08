@@ -3,10 +3,24 @@ import logo from "../../assets/logo.svg";
 import hambuger from "../../assets/Hamberger.svg";
 import { Link } from "react-router-dom";
 import { RxCross2 } from "react-icons/rx";
+import { useEffect } from "react";
 
 const HamburgerNavbar = () => {
-  const [bg, setBg] = useState([false, false, false, false]);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const [isLogin, setLogin] = useState(false);
+
+  const LogOutHandler = () => {
+    setLogin(false);
+    localStorage.removeItem("login");
+    localStorage.removeItem("id");
+  };
+  useEffect(() => {
+    const items = localStorage.getItem("login");
+    if (items === "true") {
+      setLogin(true);
+    }
+  }, [isLogin]);
 
   const handleMenuToggle = () => {
     setMenuOpen(!menuOpen);
@@ -50,22 +64,57 @@ const HamburgerNavbar = () => {
                   <Link to="aboutUs">About Us</Link>
                 </h5>
               </li>
-              <li
-                className={`text-center sm:w-[50%] w-[90%] bg-black py-2 px-6 list-none`}
-                onClick={() => setMenuOpen(false)}
-              >
-                <h5 className="text-[#FFFFFF] heading cursor-pointer">
-                  <Link to="/login">Login</Link>
-                </h5>
-              </li>
-              <li
-                className={`text-center sm:w-[50%] w-[90%]  bg-black py-2 px-6 list-none`}
-                onClick={() => setMenuOpen(false)}
-              >
-                <h5 className="text-[#FFFFFF] heading cursor-pointer">
-                  <Link to="/signup">Sign Up</Link>
-                </h5>
-              </li>
+              {isLogin && (
+                <Link to="/add">
+                  <li
+                    className={`text-center px-6  h-[30px]
+                    }`}
+                  >
+                    <h5 className="text-[#EE4C7C] heading cursor-pointer">
+                      Add Money
+                    </h5>
+                  </li>
+                </Link>
+              )}
+              {isLogin && (
+                <Link to="/pay">
+                  <li
+                    className={`text-center px-6  h-[30px] 
+                    }`}
+                  >
+                    <h5 className="text-[#EE4C7C] heading cursor-pointer">
+                      Pay
+                    </h5>
+                  </li>
+                </Link>
+              )}
+              {isLogin && (
+                <li
+                  className={`text-center px-6  h-[30px]  `}
+                  onClick={LogOutHandler}
+                >
+                  <h5 className="text-[#EE4C7C] heading cursor-pointer">
+                    Logout
+                  </h5>
+                </li>
+              )}
+              {!isLogin && (
+                <li className={`text-center px-6  h-[30px]  `}>
+                  <h5 className="text-[#EE4C7C] heading cursor-pointer">
+                    <Link to="/login">Login</Link>
+                  </h5>
+                </li>
+              )}
+              {!isLogin && (
+                <li
+                  className={`text-center w-fit px-4 ps-6 h-[30px] 
+              }`}
+                >
+                  <h5 className="text-[#EE4C7C] heading cursor-pointer">
+                    <Link to="/signup">SignUp</Link>
+                  </h5>
+                </li>
+              )}
             </div>
           </div>
         ) : null}

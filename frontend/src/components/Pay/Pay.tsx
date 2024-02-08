@@ -75,6 +75,7 @@ const Pay: React.FC = () => {
         getBalance();
       })
       .catch((error) => {
+        console.log(error);
         setWarning("Error in Making payment");
       });
   };

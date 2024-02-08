@@ -28,7 +28,6 @@ const Login = () => {
   const [isEmailValid, setIsEmailValid] = useState(true);
   const navigate = useNavigate();
   const handleShowClick = () => setShowPassword(!showPassword);
-  const [loginSuccess, setLoginSuccess] = useState(false);
   const [warning, setWarning] = useState("");
   const validateEmail = (email: string) => {
     // Basic email validation using regular expression
@@ -49,7 +48,6 @@ const Login = () => {
     console.log("Email:", email);
     console.log("Password:", password);
     loginHandler(email, password);
-    setLoginSuccess(true);
   };
   const loginHandler = (email: string, password: string) => {
     const apiUrl = "http://localhost:3000/api/v1/user/signin";
