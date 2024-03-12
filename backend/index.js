@@ -17,6 +17,7 @@ app.use("/api/v1/account", accountRoutes);
 const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, async () => {
+  
   try {
     console.log("Started Server");
     const dbClient = await dbConnect();

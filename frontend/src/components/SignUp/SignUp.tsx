@@ -71,7 +71,8 @@ const SignUp = () => {
     firstName: string,
     lastName: string
   ) => {
-    const apiUrl = "https://payment-backend-omyg.onrender.com/api/v1/user/signup";
+    const apiUrl =
+      "https://payment-backend-omyg.onrender.com/api/v1/user/signup";
 
     const postData = {
       username: email,
@@ -224,7 +225,7 @@ const SignUp = () => {
           </form>
         </Box>
       </Stack>
-      <div>{warning}</div>
+      {warning && <div>{warning}</div>}
       <Box>
         Already with us?{" "}
         <Link color="#9A1750" href="/login">
