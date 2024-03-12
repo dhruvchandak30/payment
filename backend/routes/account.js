@@ -103,27 +103,6 @@ router.post("/addMoney", async (req, res) => {
 
 module.exports = router;
 
-// function waitForMongooseConnection(mongoose) {
-//   return new Promise((resolve) => {
-//       const connection = mongoose.connection;
-//       if (connection.readyState === 1) {
-//           resolve();
-//           return;
-//       }
-//       console.log('Mongoose connection is not ready. Waiting for open or reconnect event.');
-//       let resolved = false;
-//       const setResolved = () => {
-//           console.log('Mongoose connection became ready. promise already resolved: ' + resolved);
-//           if (!resolved) {
-//               console.log('Resolving waitForMongooseConnection');
-//               resolved = true;
-//               resolve();
-//           }
-//       };
-//       connection.once('open', setResolved);
-//       connection.once('reconnect', setResolved);
-//   });
-// }
 
 // router.post("/transfer", async (req, res) => {
 //   try {
