@@ -1,12 +1,21 @@
 import { useState, useEffect } from "react";
 import Navbar from "../Navbar/Navbar";
 import "../../index.css";
+import { useNavigate } from "react-router";
 
 const AddMoney = () => {
   const [amount, setAmount] = useState(0);
   const [warning, setWarning] = useState("");
   const [isLoading, setLoading] = useState(false);
   const [balance, setBalance] = useState(0);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const data = localStorage.getItem("id");
+    if (!data) {
+      navigate("/");
+    }
+  },[navigate]);
 
   const getBalance = async () => {
     const apiUrl =
@@ -14,7 +23,6 @@ const AddMoney = () => {
     const data = {
       userId: localStorage.getItem("id"),
     };
-    console.log(data.userId);
     const fetchOptions: RequestInit = {
       method: "POST",
       headers: {
@@ -35,7 +43,7 @@ const AddMoney = () => {
         setBalance(data.balance);
       })
       .catch((error) => {
-        // setWarning("User Does not exists/Error Logging in");
+        setWarning("User Does not exists/Error Logging in");
         console.log("Error during login:", error);
       });
   };
@@ -61,7 +69,8 @@ const AddMoney = () => {
       setLoading(false);
       return;
     }
-    const apiUrl = "https://payment-backend-omyg.onrender.com/api/v1/account/addMoney";
+    const apiUrl =
+      "https://payment-backend-omyg.onrender.com/api/v1/account/addMoney";
     const data = {
       amount: amount,
       to: localStorage.getItem("id"),
@@ -101,16 +110,9 @@ const AddMoney = () => {
       <div className="font-bold text-3xl text-center">
         Add Money to your Wallet
       </div>
-      {!balance && (
-        <div
-          onClick={getBalance}
-          className="cursor-pointer flex items-center justify-center  text-xl border-1 border-black"
-        >
-          Check your Available Balance
-        </div>
-      )}
+
       <div className="flex justify-center items-center my-4">
-        {balance > 0 && (
+        {balance >= 0 && (
           <p className="text-2xl">Available Balance is Rs {balance}</p>
         )}
       </div>
@@ -127,7 +129,7 @@ const AddMoney = () => {
         ></input>
         <button
           type="submit"
-          className="border-2 border-black p-1 rounded-md my-4 bg-[#d030b0]"
+          className="border-2 border-black text-xl rounded-md my-4 p-2 bg-[#cc407c]"
         >
           Add Money
         </button>

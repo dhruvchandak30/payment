@@ -22,7 +22,7 @@ const Landing = () => {
           funds, and do a lot more.
         </p>
         <Link to={isLoggedIn ? "/pay" : "/login"}>
-          <div className="bg-[#9A1750] lg:text-xl  text-sm my-8 text-white w-max p-2 rounded-xl">
+          <div className="bg-[#9A1750] lg:text-xl  text-sm my-8 text-white w-max px-4 py-3 rounded-xl">
             Start Paying Now
           </div>
         </Link>

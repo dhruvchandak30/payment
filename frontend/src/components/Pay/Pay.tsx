@@ -11,14 +11,16 @@ interface UserInterface {
 }
 
 const Pay: React.FC = () => {
-  const [userData, setUserData] = useState<UserInterface[]>([]); // Initialize with an empty array
+  const [userData, setUserData] = useState<UserInterface[]>([]);
   const [selectedUser, setSelectedUser] = useState<UserInterface | null>(null);
-  const [amount, setAmount] = useState<number>(); // Initialize with an empty string
+  const [amount, setAmount] = useState<string>("");
   const [balance, setBalance] = useState(0);
   const [warning, setWarning] = useState("");
   const [isLoading, setLoading] = useState(false);
+
   const getUserHandler = async () => {
     setLoading(true);
+    setWarning("");
     try {
       const response = await fetch(
         "https://payment-backend-omyg.onrender.com/api/v1/user/getUsers"
@@ -26,30 +28,33 @@ const Pay: React.FC = () => {
       if (response.ok) {
         const data = (await response.json()) as { userData: UserInterface[] };
         setUserData(data.userData);
+        setSelectedUser(null);
       } else {
         setWarning("Error in Fetching Users");
       }
-      setLoading(false);
     } catch (error) {
       setWarning("Error Fetching Users");
+    } finally {
+      setLoading(false);
     }
   };
 
   const setAmountHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAmount(e.target.value === "" ? 0 : Number(e.target.value));
+    setAmount(e.target.value);
     setWarning("");
   };
 
   const makePaymentHandler = async () => {
     setLoading(true);
-    if (amount && amount > balance) {
+    if (amount && Number(amount) > balance) {
       setWarning("You don't have enough Amount");
+      setLoading(false);
       return;
     }
     const apiUrl =
       "https://payment-backend-omyg.onrender.com/api/v1/account/transfer";
     const data = {
-      amount: amount,
+      amount: Number(amount),
       to: selectedUser?._id,
       from: localStorage.getItem("id"),
     };
@@ -72,13 +77,15 @@ const Pay: React.FC = () => {
       .then((data) => {
         console.log(data);
         setWarning("Transaction Successfull");
-        setLoading(false);
+
         getBalance();
       })
       .catch((error) => {
         console.log(error);
         setWarning("Error in Making payment");
       });
+    setLoading(false);
+    setAmount("");
   };
 
   const getBalance = async () => {
@@ -107,7 +114,7 @@ const Pay: React.FC = () => {
         setBalance(data.balance);
       })
       .catch((error) => {
-        // setWarning("User Does not exists/Error Logging in");
+        setWarning("User Does not exists/Error Logging in");
         console.log("Error during login:", error);
       });
   };
@@ -119,7 +126,7 @@ const Pay: React.FC = () => {
       <Navbar />
       <div className="text-black flex  flex-col justify-center items-center">
         <p className="text-[#932243] text-4xl font-bold">Payment Portal</p>
-        {balance > 0 && (
+        {balance >= 0 && (
           <p className="text-2xl">Available Balance is Rs {balance}</p>
         )}
         <button
@@ -128,11 +135,11 @@ const Pay: React.FC = () => {
         >
           See Users to pay
         </button>
-
-        {userData.length > 0 && (
+        {!selectedUser && userData.length > 0 && (
           <p className="text-2xl mb-3">Select any User to pay them</p>
         )}
-        {userData.length > 0 &&
+        {!selectedUser &&
+          userData.length > 0 &&
           userData.map((item: UserInterface) => (
             <div key={item._id} className="w-64">
               <hr></hr>
@@ -142,7 +149,6 @@ const Pay: React.FC = () => {
                 id={item._id}
                 onUserClick={() => setSelectedUser(item)}
               />
-              <hr></hr>
             </div>
           ))}
         {selectedUser && (
@@ -160,10 +166,10 @@ const Pay: React.FC = () => {
             ></input>
           </form>
         )}
-        {selectedUser && amount && amount > 0 && (
+        {selectedUser && amount && Number(amount) > 0 && (
           <div className="flex flex-col justify-center">
             <div className="text-xl">
-              You want to pay {selectedUser?.firstName} Rs {amount}
+              You are paying {selectedUser?.firstName} Rs {amount}
             </div>
             <button
               className=" flex justify-center  items-center border-2 my-6 bg-pink-500 p-2 font-bold border-black"

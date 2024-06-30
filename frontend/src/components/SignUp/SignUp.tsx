@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "../../index.css";
 import {
   Flex,
   Heading,
@@ -30,6 +31,7 @@ const SignUp = () => {
   });
   const navigate = useNavigate();
   const [warning, setWarning] = useState("");
+  const [loading, isLoading] = useState<boolean>(false);
 
   interface FormInputEvent {
     target: {
@@ -71,6 +73,7 @@ const SignUp = () => {
     firstName: string,
     lastName: string
   ) => {
+    isLoading(true);
     const apiUrl =
       "https://payment-backend-omyg.onrender.com/api/v1/user/signup";
 
@@ -106,6 +109,7 @@ const SignUp = () => {
         setWarning("User Already exists/Error Signing Up User");
         console.error("Error during SignUp:", error);
       });
+    isLoading(false);
   };
 
   const setLocalStorage = () => {
@@ -232,6 +236,9 @@ const SignUp = () => {
           Login
         </Link>
       </Box>
+      <div className=" flex justify-center items-center">
+        {loading && <div className="IsLoader"></div>}
+      </div>
     </Flex>
   );
 };

@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/Logo.jpg";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [bg, setBg] = useState([false, false, false, false]);
 
   const hoverHandler = (e: number) => {
@@ -20,6 +22,7 @@ const Navbar = () => {
     setLogin(false);
     localStorage.removeItem("login");
     localStorage.removeItem("id");
+    navigate("/");
   };
   useEffect(() => {
     const items = localStorage.getItem("login");
@@ -52,20 +55,13 @@ const Navbar = () => {
               <Link to="/">Home</Link>
             </h5>
           </li>
-          <li
-            className={`text-center px-6 h-[30px]  ${bg[1] ? "back" : ""}`}
-            onMouseEnter={() => hoverHandler(1)}
-            onMouseLeave={hoverOut}
-          >
-            <h5 className="text-[#EE4C7C] heading cursor-pointer">About Us</h5>
-          </li>
+       
           {isLogin && (
             <Link to="/add">
               <li
                 className={`text-center px-6  h-[30px]  ${bg[2] ? "back" : ""}`}
                 onMouseEnter={() => hoverHandler(2)}
                 onMouseLeave={hoverOut}
-             
               >
                 <h5 className="text-[#EE4C7C] heading cursor-pointer">
                   Add Money

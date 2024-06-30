@@ -19,7 +19,6 @@ const signInBody = zod.object({
 });
 
 router.post("/signin", async (req, res) => {
-  console.log("Inside Signin Route", req.body);
   try {
     const client = await dbConnect();
     const { success } = signInBody.safeParse(req.body);
@@ -36,7 +35,6 @@ router.post("/signin", async (req, res) => {
       username: req.body.username,
       password: req.body.password,
     });
-    console.log("USer Data is ", existingUser);
 
     if (existingUser) {
       return res.status(200).json({

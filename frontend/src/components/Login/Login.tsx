@@ -17,7 +17,7 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 import { FaUserAlt, FaLock } from "react-icons/fa";
-
+import "../../index.css";
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
 
@@ -30,29 +30,26 @@ const Login = () => {
   const handleShowClick = () => setShowPassword(!showPassword);
   const [warning, setWarning] = useState("");
   const validateEmail = (email: string) => {
-    // Basic email validation using regular expression
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
+  const [isLoading, setLoading] = useState<boolean>(false);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // Validate email before proceeding
     if (!validateEmail(email)) {
       setIsEmailValid(false);
       return;
     }
     setIsEmailValid(true);
-
-    console.log("Email:", email);
-    console.log("Password:", password);
     loginHandler(email, password);
   };
   const loginHandler = (email: string, password: string) => {
+    setLoading(true);
     const apiUrl =
       "https://payment-backend-omyg.onrender.com/api/v1/user/signin";
-
+      // "http://localhost:3000/api/v1/user/signin";
     const postData = {
       username: email,
       password: password,
@@ -85,6 +82,7 @@ const Login = () => {
         setWarning("User Does not exists/Error Logging in");
         console.error("Error during login:", error);
       });
+    setLoading(false);
   };
 
   const setLocalStorage = () => {
@@ -181,6 +179,19 @@ const Login = () => {
           Sign Up
         </Link>
       </Box>
+      <div className=" flex justify-center items-center">
+        {isLoading && <div className="IsLoader"></div>}
+      </div>
+
+      <div className="border-2 border-black text-xl m-4 px-3 py-2 text-center">
+        <div className="font-bold ">Test Credentials</div>
+        <div>
+          <span>admin@gmail.com</span>
+        </div>
+        <div>
+          <span>admin</span>
+        </div>
+      </div>
     </Flex>
   );
 };
